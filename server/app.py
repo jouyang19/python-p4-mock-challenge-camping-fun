@@ -52,7 +52,7 @@ def all_campers():
             )
             
         except ValueError as e:
-            return {'error': 'validation failed'}, 400
+            return {'errors': 'validation failed'}, 400
         db.session.add(new_camper)
         db.session.commit()
         return new_camper.to_dict(rules = ['-signups']), 200
@@ -77,7 +77,7 @@ def camper_by_id(id):
             return {"errors": ["validation errors"]}, 400
         db.session.add(camper)
         db.session.commit()
-        return camper.to_dict(rules = ['-signups']), 200
+        return camper.to_dict(rules = ['-signups']), 202
 
 @app.route('/signups', methods = ['POST'])
 def all_signups():
@@ -91,7 +91,7 @@ def all_signups():
             time = data.get('time')
         )
     except ValueError:
-        return {'error': 'validation failed'}, 400
+        return {'errors' : ['validation errors']}, 400
     
     db.session.add(new_signup)
     db.session.commit()
